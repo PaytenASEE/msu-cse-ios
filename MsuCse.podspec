@@ -8,16 +8,16 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MsuCse'
-  s.version          = '1.0.0-SNAPSHOT'
+  s.version          = '1.0.0'
   s.summary          = 'MSU Client Side Encryption'
 
   s.description      = <<-DESC
 MSU Client Side Encryption description
                        DESC
-  s.homepage         = 'https://github.com/jasmin.suljic/MsuCse'
+  s.homepage         = 'https://github.com/PaytenASEE/msu-cse-ios'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'jasmin.suljic' => 'jasmin.suljich@gmail.com' }
-  s.source           = { :git => 'https://github.com/jasmin.suljic/MsuCse.git', :tag => s.version.to_s }
+  s.author           = { 'jasminsuljic' => 'jasmin.suljich@gmail.com' }
+  s.source           = { :git => 'https://github.com/PaytenASEE/msu-cse-ios.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '10.0'
   s.swift_version = '4.2'
