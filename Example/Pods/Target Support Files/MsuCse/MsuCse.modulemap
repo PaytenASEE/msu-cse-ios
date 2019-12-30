@@ -1,0 +1,6 @@
+framework module MsuCse {
+  umbrella header "MsuCse-umbrella.h"
+
+  export *
+  module * { export * }
+}

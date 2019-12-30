@@ -1,0 +1,22 @@
+{
+  "name": "MsuCse",
+  "version": "0.1.0",
+  "summary": "A short description of MsuCse.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/jasmin.suljic/MsuCse",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "jasmin.suljic": "jasmin.suljich@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/jasmin.suljic/MsuCse.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "MsuCse/Classes/**/*"
+}
