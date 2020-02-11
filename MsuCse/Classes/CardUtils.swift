@@ -133,89 +133,63 @@ internal class CardUtils {
     
     static let PREFIX_DINACARD = "9891";
     static let PREFIXES_DINACARD: [String] = [
-
-                // (0[0-4])
-                PREFIX_DINACARD + "00",
-                PREFIX_DINACARD + "01",
-                PREFIX_DINACARD + "02",
-                PREFIX_DINACARD + "03",
-                PREFIX_DINACARD + "04",
-    //          PREFIX_DINACARD +    0[6-7]
-                PREFIX_DINACARD + "06",
-                PREFIX_DINACARD + "07",
-
-                // 01
-                PREFIX_DINACARD + "09",
-                // 1-5
-                PREFIX_DINACARD + "11",
-                PREFIX_DINACARD + "12",
-                PREFIX_DINACARD + "13",
-                PREFIX_DINACARD + "14",
-                PREFIX_DINACARD + "15",
-
-                // 7-9
-                PREFIX_DINACARD + "17",
-                PREFIX_DINACARD + "18",
-                PREFIX_DINACARD + "19",
-                // 2[1-5]
-                PREFIX_DINACARD + "21",
-                PREFIX_DINACARD + "22",
-                PREFIX_DINACARD + "23",
-                PREFIX_DINACARD + "24",
-                PREFIX_DINACARD + "25",
-                // 27, 29, 30, 31, 35, 36
-                PREFIX_DINACARD + "27",
-                PREFIX_DINACARD + "29",
-                PREFIX_DINACARD + "30",
-                PREFIX_DINACARD + "31",
-                PREFIX_DINACARD + "35",
-                PREFIX_DINACARD + "36",
-                // 4[0-4]
-                PREFIX_DINACARD + "40",
-                PREFIX_DINACARD + "41",
-                PREFIX_DINACARD + "42",
-                PREFIX_DINACARD + "43",
-                PREFIX_DINACARD + "44",
-                // 46, 49
-                PREFIX_DINACARD + "46",
-                PREFIX_DINACARD + "49",
-                PREFIX_DINACARD + "50",
-                // 5[0-3]
-                PREFIX_DINACARD + "51",
-                PREFIX_DINACARD + "52",
-                PREFIX_DINACARD + "53",
-                // 5[5-9]
-                PREFIX_DINACARD + "55",
-                PREFIX_DINACARD + "56",
-                PREFIX_DINACARD + "57",
-                PREFIX_DINACARD + "58",
-                PREFIX_DINACARD + "59",
-                // 6[0-1]
-                PREFIX_DINACARD + "60",
-                PREFIX_DINACARD + "61",
-                // 6[4-9]
-                PREFIX_DINACARD + "64",
-                PREFIX_DINACARD + "65",
-                PREFIX_DINACARD + "66",
-                PREFIX_DINACARD + "67",
-                PREFIX_DINACARD + "68",
-                PREFIX_DINACARD + "69",
-                // 70
-                PREFIX_DINACARD + "70",
-                // 7[3-8]
-                PREFIX_DINACARD + "73",
-                PREFIX_DINACARD + "74",
-                PREFIX_DINACARD + "75",
-                PREFIX_DINACARD + "76",
-                PREFIX_DINACARD + "77",
-                PREFIX_DINACARD + "78",
-                // 80
-                PREFIX_DINACARD + "80",
-                // 8[6-9]
-                PREFIX_DINACARD + "86",
-                PREFIX_DINACARD + "87",
-                PREFIX_DINACARD + "88",
-                PREFIX_DINACARD + "89"
+                PREFIX_DINACARD,
+                "655670",
+                "655671",
+                "655672",
+                "655673",
+                "655674",
+                "655675",
+                "655676",
+                "655677",
+                "655678",
+                "655679",
+                "655680",
+                "655681",
+                "655682",
+                "655683",
+                "655684",
+                "655685",
+                "655686",
+                "655687",
+                "655688",
+                "655689",
+                "655690",
+                "655691",
+                "655692",
+                "655693",
+                "655694",
+                "655695",
+                "655696",
+                "655697",
+                "657371",
+                "657372",
+                "657373",
+                "657374",
+                "657375",
+                "657376",
+                "657377",
+                "657378",
+                "657379",
+                "657380",
+                "657381",
+                "657382",
+                "657383",
+                "657384",
+                "657385",
+                "657386",
+                "657387",
+                "657388",
+                "657389",
+                "657390",
+                "657391",
+                "657392",
+                "657393",
+                "657394",
+                "657395",
+                "657396",
+                "657397",
+                "657398"
         ];
     
     static func isValidCVV(_ cvv: String) -> Bool {
@@ -236,7 +210,8 @@ internal class CardUtils {
     }
     
     static func isValidCardHolderName(_ name: String) -> Bool {
-        return name.count <= 128
+        let v = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        return v.count > 0 && v.count <= 128
     }
     
     static func cardBrand(_ pan: String?) -> CardBrand {
@@ -275,6 +250,8 @@ internal class CardUtils {
         
         if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_AMERICAN_EXPRESS)) {
             return CardBrand.AmericanExpress;
+        } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_DINACARD)) {
+            return CardBrand.Dinacard;
         } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber,prefixes: PREFIXES_DISCOVER)) {
             return CardBrand.Discover;
         } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_JCB)) {
@@ -287,9 +264,7 @@ internal class CardUtils {
             return CardBrand.Mastercard;
         } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_UNIONPAY)) {
             return CardBrand.UnionPay;
-        } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_DINACARD)) {
-            return CardBrand.Dinacard;
-        } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_TROY)) {
+        }  else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_TROY)) {
             return CardBrand.Troy;
         } else {
             return CardBrand.Unknown;
@@ -336,7 +311,7 @@ internal class CardUtils {
     }
     
     static func validateExpYear(now: Date, year: Int) -> Bool {
-        return hasYearPassed(year, now: now)
+        return !hasYearPassed(year, now: now)
     }
     
     static func hasYearPassed(_ year: Int, now: Date) -> Bool {

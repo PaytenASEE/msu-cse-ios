@@ -212,46 +212,51 @@ internal class CSEApiImpl: CSEApi {
         }
     }
     
+    var publicKey: String?
+    
     init(developmentMode: Bool) {
         self.developmentMode = developmentMode
     }
     
     func fetchPublicKey(_ callback: @escaping (PublicKeyFetchResult) -> Void) {
         
-callback(.result("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhGNpIhKTlCi1iwKEbFD2CTL0AYbMV+QCaP/5bl2hkBjgkQdG931Vep7Z4gVCSYCmmE4T8d1TIdkNoTPwOltzoX9Z1pI/EoqktNLlS3re+dApPU36FHGaGaPCfNR+/zJ1Pd1qazaZ5SJhFyf17KU9HLi7w9WYRJVGDWj6CJKeefWYLclLThD+SBCmpJTqhDdFRt9bW1LwSqfshmSzxI7jHTqnj+o4Ikv2xC4V7bIwjzmUk7t4IzT+rJcin+oB+Xgq+stxvZodZrpSZbXnPNObSIsVCxXqdDz1lXjkwMc9aV0X5KqOjEK87QjguPAGsba3AfbWIWjzuR3xoAVzQRo+tQIDAQAB"))
+        if let publicKey = self.publicKey {
+            callback(.result(publicKey))
+            return
+        }
         
-        return
-        
-//        let url = URL(string: endpoint)!
-//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//            if let error = error {
-//                callback(PublicKeyFetchResult.error(error))
-//            } else {
-//                if let data = data {
-//                    do {
-//                        let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
-//                        
-//                        guard let jsonObject = result else {
-//                            callback(.error(EncryptionError.publicKeyEncodingFailed("Decoding failed, result nil")))
-//                            return
-//                        }
-//                        
-//                        guard let publicKey = jsonObject["publicKey"] else {
-//                            callback(.error(EncryptionError.publicKeyEncodingFailed("Decoding failed, missing public key")))
-//                            return
-//                        }
-//                        
-//                        callback(.result(publicKey))
-//                        
-//                    } catch {
-//                            callback(.error(EncryptionError.publicKeyEncodingFailed(error.localizedDescription)))
-//                    }
-//                } else {
-//                    callback(.error(EncryptionError.publicKeyEncodingFailed("Decoding failed")))
-//                }
-//            }
-//        }
-//        task.resume()
+        let url = URL(string: endpoint)!
+        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error)  in
+            if let error = error {
+                callback(PublicKeyFetchResult.error(error))
+            } else {
+                if let data = data {
+                    do {
+                        let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String]
+                        
+                        guard let jsonObject = result else {
+                            callback(.error(EncryptionError.publicKeyEncodingFailed("Decoding failed, result nil")))
+                            return
+                        }
+                        
+                        guard let publicKey = jsonObject["publicKey"] else {
+                            callback(.error(EncryptionError.publicKeyEncodingFailed("Decoding failed, missing public key")))
+                            return
+                        }
+                        
+                        self?.publicKey = publicKey
+                        
+                        callback(.result(publicKey))
+                        
+                    } catch {
+                            callback(.error(EncryptionError.publicKeyEncodingFailed(error.localizedDescription)))
+                    }
+                } else {
+                    callback(.error(EncryptionError.publicKeyEncodingFailed("Decoding failed")))
+                }
+            }
+        }
+        task.resume()
     }
 }
 

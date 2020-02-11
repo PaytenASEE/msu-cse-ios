@@ -45,6 +45,10 @@ class ViewController: UIViewController {
         if (!cse.isValidExpiry(month: 10, year: 2018)) {
             print("Expiry year in past");
         }
+        
+        if (cse.isValidExpiry(month: 10, year: 2020)) {
+            print("Valid expiry");
+        }
 
         // dinacard - 989100
         let cardBrand = cse.detectBrand("989100");
