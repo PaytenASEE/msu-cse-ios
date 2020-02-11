@@ -332,7 +332,7 @@ internal class CardUtils {
     }
     
     static func validateNonce(_ nonce: String) -> Bool {
-        return nonce.count <= 16
+        return nonce.count > 0 && nonce.count <= 16
     }
 }
 

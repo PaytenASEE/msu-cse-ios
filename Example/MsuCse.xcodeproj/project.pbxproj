@@ -15,6 +15,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		B38CA91A7441D580AC6BC678 /* Pods_MsuCse_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEFBC691BCA1FD19769A869 /* Pods_MsuCse_Tests.framework */; };
 		D3DF3290E1AEE096C4051CC7 /* Pods_MsuCse_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE60E3565509325C29CA3031 /* Pods_MsuCse_Example.framework */; };
+		F2546E9B23F2CA7C0088BC89 /* CSEEncryptValiditySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2546E9A23F2CA7C0088BC89 /* CSEEncryptValiditySpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		BE60E3565509325C29CA3031 /* Pods_MsuCse_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MsuCse_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE6B9D825409A8A6676D7A2C /* Pods-MsuCse_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MsuCse_Example.release.xcconfig"; path = "Target Support Files/Pods-MsuCse_Example/Pods-MsuCse_Example.release.xcconfig"; sourceTree = "<group>"; };
 		E54AB3B6EF4AD7665E1F9E53 /* Pods-MsuCse_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MsuCse_Tests.release.xcconfig"; path = "Target Support Files/Pods-MsuCse_Tests/Pods-MsuCse_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		F2546E9A23F2CA7C0088BC89 /* CSEEncryptValiditySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSEEncryptValiditySpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				F2546E9A23F2CA7C0088BC89 /* CSEEncryptValiditySpec.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2546E9B23F2CA7C0088BC89 /* CSEEncryptValiditySpec.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

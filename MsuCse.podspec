@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MsuCse'
-  s.version          = '1.0.1'
+  s.version          = '1.0.3'
   s.summary          = 'MSU Client Side Encryption'
 
   s.description      = <<-DESC
@@ -23,4 +23,9 @@ MSU Client Side Encryption description
   s.swift_version = '4.2'
 
   s.source_files = 'MsuCse/Classes/**/*'
+  
+#  s.test_spec 'Tests' do |test_spec|
+#    test_spec.requires_app_host = true
+#    test_spec.source_files = 'Example/Tests/**/*'
+#  end
 end

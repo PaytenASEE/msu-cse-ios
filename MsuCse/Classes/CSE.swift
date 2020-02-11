@@ -9,10 +9,17 @@ import Foundation
 
 @available(iOS 10.0, *)
 public class CSE {
-    var errors: [String] = []
+    
+    private var _errors: [String] = []
+    
+    public  var errors: [String] {
+        get {
+            return _errors
+        }
+    }
     private let cseApi: CSEApi
     
-    var hasErrors: Bool { errors.count > 0 }
+    public var hasErrors: Bool { errors.count > 0 }
     
     public init(developmentMode: Bool) {
         cseApi = CSEApiImpl(developmentMode: developmentMode)
@@ -61,25 +68,30 @@ public class CSE {
     }
     
     private func encrypt(_ request: EncryptRequest, _ callback: @escaping EncryptCallback) {
-        
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            
-            guard let cseApi = self?.cseApi else {
-                return
-            }
-            
-            cseApi.fetchPublicKey {
-                r in
-                switch r {
-                case .error(let e):
-                    DispatchQueue.main.async { callback(.error(.unknownException(e))) }
-                case .result(let publicKey):
-                    let encrypted = RSAEncryption.encrypt(publicKey, plain: request.plain())
-                    switch encrypted {
+        _errors = []
+        if !request.validate() {
+            _errors = request.errors()
+            DispatchQueue.main.async {callback(.error(EncryptionError.validationFailed))}
+        } else {
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                
+                guard let cseApi = self?.cseApi else {
+                    return
+                }
+                
+                cseApi.fetchPublicKey {
+                    r in
+                    switch r {
                     case .error(let e):
-                        DispatchQueue.main.async { callback(.error(e)) }
-                    case .success(let encrypted):
-                        DispatchQueue.main.async { callback(.success(encrypted)) }
+                        DispatchQueue.main.async { callback(.error(.unknownException(e))) }
+                    case .result(let publicKey):
+                        let encrypted = RSAEncryption.encrypt(publicKey, plain: request.plain())
+                        switch encrypted {
+                        case .error(let e):
+                            DispatchQueue.main.async { callback(.error(e)) }
+                        case .success(let encrypted):
+                            DispatchQueue.main.async { callback(.success(encrypted)) }
+                        }
                     }
                 }
             }
@@ -196,6 +208,50 @@ public enum EncryptionError: Error {
     case encryptionFailed(String)
 }
 
+extension EncryptionError {
+public static func ==(lhs: EncryptionError, rhs:EncryptionError) -> Bool {
+    switch lhs {
+    case .requestFailed:
+        switch rhs {
+        case .requestFailed:
+            return true
+        default:
+            return false
+        }
+    case .validationFailed:
+        switch rhs {
+        case .validationFailed:
+            return true
+        default:
+            return false
+        }
+    case .encryptionFailed(let a):
+        switch rhs {
+        case .encryptionFailed(let b):
+            return a == b
+        default:
+            return false
+        }
+        
+    case .publicKeyEncodingFailed(let a):
+        switch rhs {
+        case .publicKeyEncodingFailed(let b):
+            return a == b
+        default:
+            return false
+        }
+        
+    case .unknownException:
+        switch rhs {
+        case .unknownException:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    }
+}
 
 internal protocol CSEApi {
     func fetchPublicKey(_ callback: @escaping (PublicKeyFetchResult) -> Void)
