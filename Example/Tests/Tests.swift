@@ -195,7 +195,10 @@ class CSEDetectBrandSpec: QuickSpec {
                     .detectBrand(TestDataDetectBrand(cardNumber: DINA_CARD_TEST_NUMBER_2, cardBrand: .Dinacard)),
                     .detectBrand(TestDataDetectBrand(cardNumber: DISCOVER_TEST_CARD, cardBrand: .Discover)),
                     .detectBrand(TestDataDetectBrand(cardNumber: MAESTRO_TEST_NUMBER_1, cardBrand: .Maestro)),
-                    .detectBrand(TestDataDetectBrand(cardNumber: MAESTRO_TEST_NUMBER_2, cardBrand: .Maestro))
+                    .detectBrand(TestDataDetectBrand(cardNumber: MAESTRO_TEST_NUMBER_2, cardBrand: .Maestro)),
+                    .detectBrand(TestDataDetectBrand(cardNumber: "6759649826438453", cardBrand: .Maestro)),
+                    .detectBrand(TestDataDetectBrand(cardNumber: "5890040000000016", cardBrand: .Maestro)),
+                    .detectBrand(TestDataDetectBrand(cardNumber: "5892830000000000", cardBrand: .Maestro))
                 ]
                 
                 testValues.forEach {
@@ -240,7 +243,10 @@ class CSEPanValiditySpec: QuickSpec {
                     .isValidPan(TestDataCardNumber(cardNumber: MASTER_CARD_TEST_NUMBER, testResult: true)),
                     .isValidPan(TestDataCardNumber(cardNumber: DISCOVER_TEST_CARD, testResult: true)),
                     .isValidPan(TestDataCardNumber(cardNumber: MAESTRO_TEST_NUMBER_1, testResult: true)),
-                    .isValidPan(TestDataCardNumber(cardNumber: MAESTRO_TEST_NUMBER_2, testResult: true))
+                    .isValidPan(TestDataCardNumber(cardNumber: MAESTRO_TEST_NUMBER_2, testResult: true)),
+                    .isValidPan(TestDataCardNumber(cardNumber: "6759649826438453", testResult: true)),
+                    .isValidPan(TestDataCardNumber(cardNumber: "5890040000000016", testResult: true)),
+                    .isValidPan(TestDataCardNumber(cardNumber: "5892830000000000", testResult: true))
                 ]
                 
                 testValues.forEach {
