@@ -10,6 +10,7 @@ import Foundation
 public enum CardBrand: String {
     case Visa = "visa"
     case Mastercard = "mastercard"
+    case Maestro = "maestro"
     case AmericanExpress = "american-express"
     case DinersClub = "diners-club"
     case Discover = "discover"

@@ -12,6 +12,8 @@ internal class CardUtils {
     static let  LENGTH_COMMON_CARD = 16;
     static let  LENGTH_AMERICAN_EXPRESS = 15;
     static let  LENGTH_DINERS_CLUB = 14;
+    static let MAESTRO_CARD_LENGTH = [12, 13, 14, 15, 16, 17, 18, 19]
+    static let VISA_CARD_LENGTH = [16, 19]
     
     static let  PREFIXES_AMERICAN_EXPRESS = ["34", "37"]
     static let  PREFIXES_DISCOVER = ["60", "64", "65"]
@@ -25,8 +27,11 @@ internal class CardUtils {
             "23", "24", "25", "26",
             "270", "271", "2720",
             "50", "51", "52", "53", "54", "55", "67"
-    ];
-    static let  PREFIXES_UNIONPAY = ["62"];
+    ]
+    
+    static let  PREFIXES_UNIONPAY = ["62"]
+    
+    static let PREFIXES_MAESTRO = ["56", "58", "67", "502", "503", "506", "639", "5018", "6020"]
     
     static let PREFIXES_TROY = [
             "979200",
@@ -240,6 +245,10 @@ internal class CardUtils {
             return length == LENGTH_AMERICAN_EXPRESS
         case .DinersClub:
             return length == LENGTH_DINERS_CLUB
+        case .Visa:
+            return VISA_CARD_LENGTH.contains(length)
+        case .Maestro:
+            return MAESTRO_CARD_LENGTH.contains(length)
         default:
             return length == LENGTH_COMMON_CARD
         }
@@ -260,11 +269,13 @@ internal class CardUtils {
             return CardBrand.DinersClub;
         } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_VISA)) {
             return CardBrand.Visa;
+        } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_MAESTRO)) {
+            return CardBrand.Maestro;
         } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_MASTERCARD)) {
             return CardBrand.Mastercard;
         } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_UNIONPAY)) {
             return CardBrand.UnionPay;
-        }  else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_TROY)) {
+        } else if (CSETextUtils.hasAnyPrefix(spacelessCardNumber, prefixes: PREFIXES_TROY)) {
             return CardBrand.Troy;
         } else {
             return CardBrand.Unknown;

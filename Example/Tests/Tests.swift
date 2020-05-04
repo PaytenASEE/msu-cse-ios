@@ -6,8 +6,11 @@ import MsuCse
 
 let AMEX_TEST_NUMBER = "349482295541627"
 let VISA_TEST_CARD = "4341 7920 0000 0044"
+let VISA_TEST_CARD_1 = "4111 1111 1111 1111 003"
 let DINA_CARD_TEST_NUMBER_1 = "9891 3759 1834 2675"
 let DINA_CARD_TEST_NUMBER_2 = "6556 7232 7591 8342"
+let MAESTRO_TEST_NUMBER_1 = "6759 6498 2643 8453"
+let MAESTRO_TEST_NUMBER_2 = "6772 5565 4321 31279"
 let MASTER_CARD_TEST_NUMBER = "5555 5555 5555 4444"
 let DISCOVER_TEST_CARD = "6011 0000 0000 0004"
 
@@ -185,11 +188,14 @@ class CSEDetectBrandSpec: QuickSpec {
                     // Test whitespace trimmable input
                     .detectBrand(TestDataDetectBrand(cardNumber: "  411111   ", cardBrand: .Visa)),
                     .detectBrand(TestDataDetectBrand(cardNumber: "4111 1111 1111 1111", cardBrand: .Visa)),
+                    .detectBrand(TestDataDetectBrand(cardNumber: VISA_TEST_CARD_1, cardBrand: .Visa)),
                     .detectBrand(TestDataDetectBrand(cardNumber: MASTER_CARD_TEST_NUMBER, cardBrand: .Mastercard)),
                     .detectBrand(TestDataDetectBrand(cardNumber: AMEX_TEST_NUMBER, cardBrand: .AmericanExpress)),
                     .detectBrand(TestDataDetectBrand(cardNumber: DINA_CARD_TEST_NUMBER_1, cardBrand: .Dinacard)),
                     .detectBrand(TestDataDetectBrand(cardNumber: DINA_CARD_TEST_NUMBER_2, cardBrand: .Dinacard)),
-                    .detectBrand(TestDataDetectBrand(cardNumber: DISCOVER_TEST_CARD, cardBrand: .Discover))
+                    .detectBrand(TestDataDetectBrand(cardNumber: DISCOVER_TEST_CARD, cardBrand: .Discover)),
+                    .detectBrand(TestDataDetectBrand(cardNumber: MAESTRO_TEST_NUMBER_1, cardBrand: .Maestro)),
+                    .detectBrand(TestDataDetectBrand(cardNumber: MAESTRO_TEST_NUMBER_2, cardBrand: .Maestro))
                 ]
                 
                 testValues.forEach {
@@ -227,11 +233,14 @@ class CSEPanValiditySpec: QuickSpec {
             it("should return true for valid card number") {
                 let testValues: [TestData] = [
                     .isValidPan(TestDataCardNumber(cardNumber: VISA_TEST_CARD, testResult: true)),
+                    .isValidPan(TestDataCardNumber(cardNumber: VISA_TEST_CARD_1, testResult: true)),
                     .isValidPan(TestDataCardNumber(cardNumber: AMEX_TEST_NUMBER, testResult: true)),
                     .isValidPan(TestDataCardNumber(cardNumber: DINA_CARD_TEST_NUMBER_1, testResult: true)),
                     .isValidPan(TestDataCardNumber(cardNumber: DINA_CARD_TEST_NUMBER_2, testResult: true)),
                     .isValidPan(TestDataCardNumber(cardNumber: MASTER_CARD_TEST_NUMBER, testResult: true)),
-                    .isValidPan(TestDataCardNumber(cardNumber: DISCOVER_TEST_CARD, testResult: true))
+                    .isValidPan(TestDataCardNumber(cardNumber: DISCOVER_TEST_CARD, testResult: true)),
+                    .isValidPan(TestDataCardNumber(cardNumber: MAESTRO_TEST_NUMBER_1, testResult: true)),
+                    .isValidPan(TestDataCardNumber(cardNumber: MAESTRO_TEST_NUMBER_2, testResult: true))
                 ]
                 
                 testValues.forEach {
