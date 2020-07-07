@@ -61,6 +61,34 @@ class CSEEncryptValiditySpec: QuickSpec {
             cse = CSE(developmentMode: true)
         }
         
+        describe("CSE") {
+            it("should pad month < 10 with leading 0 in CardEncryptRequest.plain") {
+                let year = Calendar.current.component(.year, from:Date()) + 1
+                let request = CardEncryptRequest(pan: "4111 1111 1111 1111",
+                                   cardHolderName: "Test Testovic",
+                                   year: year,
+                                   month: 5,
+                                   cvv: "123",
+                                   nonce: "123456"
+                );
+                
+                expect(request.plain()) == "p=4111111111111111&y=2021&m=05&c=123&cn=Test Testovic&n=123456"
+            }
+            
+            it("should not pad month >=10 with leading 0 in CardEncryptRequest.plain") {
+                let year = Calendar.current.component(.year, from:Date()) + 1
+                let request = CardEncryptRequest(pan: "4111 1111 1111 1111",
+                                   cardHolderName: "Test Testovic",
+                                   year: year,
+                                   month: 10,
+                                   cvv: "123",
+                                   nonce: "123456"
+                );
+                
+                expect(request.plain()) == "p=4111111111111111&y=2021&m=10&c=123&cn=Test Testovic&n=123456"
+            }
+        }
+        
         describe("CSE.encryptCardDetails") {
             
             it("should return .error(e) when card payload is incorrect") {

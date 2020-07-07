@@ -101,13 +101,13 @@ public class CSE {
 
 public typealias EncryptCallback = (EncryptResult) -> Void
 
-internal protocol EncryptRequest {
+public protocol EncryptRequest {
     func validate() -> Bool
     func errors() -> [String]
     func plain() -> String
 }
 
-internal class CvvEncryptionRequest: EncryptRequest {
+public class CvvEncryptionRequest: EncryptRequest {
     let cvv: String
     let nonce: String
     
@@ -118,7 +118,7 @@ internal class CvvEncryptionRequest: EncryptRequest {
     
     private var _errors: [String] = []
     
-    func validate() -> Bool {
+    public func validate() -> Bool {
         _errors = []
         
         if !CardUtils.isValidCVV(cvv) {
@@ -132,16 +132,16 @@ internal class CvvEncryptionRequest: EncryptRequest {
         return _errors.isEmpty
     }
     
-    func errors() -> [String] {
+    public func errors() -> [String] {
         return _errors
     }
     
-    func plain() -> String {
+    public func plain() -> String {
         return "c=\(cvv)&n=\(nonce)"
     }
 }
 
-internal class CardEncryptRequest: EncryptRequest {
+public class CardEncryptRequest: EncryptRequest {
     let pan: String
     let cardHolderName: String
     let year: Int
@@ -151,7 +151,7 @@ internal class CardEncryptRequest: EncryptRequest {
     
     private var _errors: [String] = []
     
-    init(pan: String, cardHolderName: String, year: Int, month: Int, cvv: String, nonce: String) {
+    public init(pan: String, cardHolderName: String, year: Int, month: Int, cvv: String, nonce: String) {
         self.pan = pan.digits
         self.cardHolderName = cardHolderName
         self.year = year
@@ -160,7 +160,7 @@ internal class CardEncryptRequest: EncryptRequest {
         self.nonce = nonce
     }
     
-    func validate() -> Bool {
+    public func validate() -> Bool {
         _errors = []
         
         if !CardUtils.isValidPan(pan) {
@@ -186,12 +186,20 @@ internal class CardEncryptRequest: EncryptRequest {
         return _errors.isEmpty
     }
     
-    func errors() -> [String] {
+    public func errors() -> [String] {
         return _errors
     }
     
-    func plain() -> String {
-        return "p=\(pan)&y=\(year)&m=\(month)&c=\(cvv)&cn=\(cardHolderName)&n=\(nonce)"
+    private static func paddedMonth(_ month: Int) -> String {
+        if (month < 10) {
+            return "0\(month)"
+        } else {
+            return "\(month)"
+        }
+    }
+    
+    public func plain() -> String {
+        return "p=\(pan)&y=\(year)&m=\(CardEncryptRequest.paddedMonth(month))&c=\(cvv)&cn=\(cardHolderName)&n=\(nonce)"
     }
 }
 

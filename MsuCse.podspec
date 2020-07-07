@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MsuCse'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = 'MSU Client Side Encryption'
 
   s.description      = <<-DESC
